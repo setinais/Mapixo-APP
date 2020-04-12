@@ -3,7 +3,8 @@
   "version": 1,
   "newProjectRoot": "projects",
   "cli": {
-    "defaultCollection": "@nativescript/schematics"
+    "defaultCollection": "@nativescript/schematics",
+    "analytics": "e3e92d67-a460-4b41-8bf6-6561666731f8"
   },
   "projects": {
     "hello-world": {
@@ -13,5 +14,5 @@
       "prefix": "ns"
     }
   },
-  "defaultProject": "hello-world"
+  "defaultProject": "maixo"
 }

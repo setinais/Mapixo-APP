@@ -1,8 +1,14 @@
 export class CredentialsModel {
-    client_id: number
-    client_secret: string
-    grant_type: string
-    username: string
+    constructor(token_name: string) {
+        this.token_name = token_name;
+    }
+    email: string
     password: string
-    scope: []
+    token_name: string
+}
+
+export class ValidatorCredentials{
+    email: Array<string>
+    password: Array<string>
+    token_name: Array<string>
 }

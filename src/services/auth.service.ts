@@ -15,8 +15,8 @@ export class AuthService {
 
     constructor(private http:HttpClient) {}
 
-    getToken(auth: CredentialsModel){
-        return this.http.post(`${url_api}oauth/token`, auth)
+    login(auth: CredentialsModel){
+        return this.http.post(`${url_api}airlock/token`, auth)
             .pipe(tap(response => {
                 this.setToken(response as TokenModel)
             }))
@@ -24,11 +24,10 @@ export class AuthService {
 
     setToken(theToken: TokenModel){
         let today = new Date()
-        today.setSeconds(new Date().getSeconds() + 2592000)
+        today.setSeconds(new Date().getSeconds() + 10368000)
 
-        setString("token",theToken.access_token)
+        setString("token",theToken.token)
         setString("expires_in", today.toString())
-        setString("refresh_token",theToken.refresh_token)
         setBoolean("status_auth", true)
 
     }
@@ -44,7 +43,6 @@ export class AuthService {
     logout(){
         setString("token","")
         setString("expires_in", "")
-        setString("refresh_token", "")
         setString("user_id", "")
         setBoolean("status_auth", false)
     }
