@@ -2,22 +2,22 @@ import { Injectable } from '@angular/core';
 import {CredentialsModel} from "~/models/credentials.model";
 import {HttpClient} from "@angular/common/http";
 import {url_api} from "~/env/url-default";
-import {UserModel} from "~/models/user.model";
+import {OfertaModel} from "~/models/oferta.model";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class UserService {
+export class OfertaService {
 
-  constructor(private http:HttpClient) {  }
+    constructor(private http:HttpClient) {  }
 
-    store(user: UserModel){
-      return this.http.post(`${url_api}user/store`, user)
+    store(user: OfertaModel){
+        return this.http.post(`${url_api}user/store`, user)
     }
     show(){
         return this.http.get(`${url_api}user/show`)
     }
-    put(user:UserModel, id){
+    put(user:OfertaModel, id){
         return this.http.put(`${url_api}user/update`, user);
     }
     delete(id: number){

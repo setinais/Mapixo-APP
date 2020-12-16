@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {UserModel, ValidatorUser} from "~/models/user.model";
+import {UserModel, UserValidator} from "~/models/user.model";
 import {Page} from "tns-core-modules/ui/page";
 import {UserService} from "~/services/user.service";
 import {RouterExtensions} from "nativescript-angular/router";
@@ -15,10 +15,10 @@ export class AdduserComponent implements OnInit {
     processing = false;
     user: UserModel;
     confirm_password: string = ''
-    form_validator: ValidatorUser;
+    form_validator: UserValidator;
 
     response: ResponseModel<UserModel>
-    response_error: ResponseModel<ValidatorUser>
+    response_error: ResponseModel<UserValidator>
 
 
     @ViewChild("email", {static: false}) email: ElementRef;
@@ -28,7 +28,7 @@ export class AdduserComponent implements OnInit {
 
     constructor(private page: Page, private userService: UserService, private routerExtensions: RouterExtensions) {
         this.user = new UserModel();
-        this.form_validator = new ValidatorUser();
+        this.form_validator = new UserValidator();
     }
 
     ngOnInit(): void {
@@ -36,7 +36,7 @@ export class AdduserComponent implements OnInit {
     }
 
     submit(){
-        this.form_validator = new ValidatorUser();
+        this.form_validator = new UserValidator();
         let continuar = true;
         if(!this.user.nome){
             this.form_validator.nome = ["Campo Nome Obrigatorio!"]

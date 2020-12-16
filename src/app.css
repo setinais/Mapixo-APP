@@ -26,4 +26,17 @@ Button.-primary {
 .background-color-padrao{
     background-color: #006600;
 }
+.fas{
+    font-family: "Font Awesome 5 Free", "fa-solid-900";
+    font-weight: 900;
+}
+.fab{
+    font-family: "Font Awesome 5 Free", "fa-brands-400";
+    font-weight: 400;
+}
+
+.icon{
+    font-family: "IcoMoon-Free", "IconMoon-Free";
+    font-weight: 400;
+}
 

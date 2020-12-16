@@ -9,6 +9,11 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { AdduserComponent } from './adduser/adduser.component';
 import { HomeComponent } from './home/home.component';
 import {TokenInterceptor} from "~/intercepter/intercptor";
+import {PutuserComponent} from "~/app/putuser/putuser.component";
+import {RedefinirSenhaComponent} from "~/app/redefinir-senha/redefinir-senha.component";
+import {FloatLabel} from "~/styles/float-label";
+import { OfertaMaterialComponent } from './oferta-material/oferta-material.component';
+import { LocalizacaoModalComponent } from './oferta-material/localizacao-modal/localizacao-modal.component';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -32,7 +37,14 @@ import {TokenInterceptor} from "~/intercepter/intercptor";
         IndexComponent,
         LoginComponent,
         AdduserComponent,
-        HomeComponent
+        HomeComponent,
+        PutuserComponent,
+        RedefinirSenhaComponent,
+        OfertaMaterialComponent,
+        LocalizacaoModalComponent,
+        FloatLabel,
+        OfertaMaterialComponent,
+        LocalizacaoModalComponent
     ],
     providers: [
         {

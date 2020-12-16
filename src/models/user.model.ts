@@ -6,7 +6,7 @@ export class UserModel {
     password_confirmation: string
 }
 
-export class ValidatorUser{
+export class UserValidator{
     nome: Array<string>
     email: Array<string>
     telefone: Array<string>
