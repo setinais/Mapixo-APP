@@ -1,0 +1,70 @@
+<ActionBar title="Cadastro" class="background-color-padrao">
+    <NavigationButton text="Voltar" icon="res://ic_arrow_back_black_24dp" class="go-back" [nsRouterLink]="['/login']" clearHistory="true" pageTransition="slideRight" ></NavigationButton>
+</ActionBar>
+<FlexboxLayout class="page">
+    <StackLayout class="form">
+        <!--        <Image class="logo" src="~/images/logo.png"></Image>-->
+        <Label class="header" text="MAPIXO"></Label>
+
+            <ScrollView scrollBarIndicatorVisible="true" orientation="vertical" width="100%" height="400">
+            <GridLayout rows="auto, auto, auto, auto, auto">
+                <StackLayout row="0" class="input-field">
+                    <TextField class="input" hint="Nome" [isEnabled]="!processing"
+                               keyboardType="email" autocorrect="false"
+                               autocapitalizationType="none" [(ngModel)]="user.nome"
+                               returnKeyType="next" (returnPress)="focusEmail()"></TextField>
+                    <StackLayout class="hr-light">
+                        <Label *ngFor="let error of form_validator.nome" class="errors-line" [text]="error"></Label>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout row="1" class="input-field">
+                    <TextField #email class="input" hint="Email" [isEnabled]="!processing"
+                               keyboardType="email" autocorrect="false"
+                               autocapitalizationType="none" [(ngModel)]="user.email"
+                               returnKeyType="next" (returnPress)="focusTelefone()"></TextField>
+                    <StackLayout class="hr-light">
+                        <Label *ngFor="let error of form_validator.email" class="errors-line" [text]="error"></Label>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout row="2" class="input-field">
+                    <TextField #telefone class="input" hint="Telefone" [isEnabled]="!processing"
+                               keyboardType="number" autocorrect="false"
+                               autocapitalizationType="none" [(ngModel)]="user.telefone"
+                               returnKeyType="next" (returnPress)="focusPassword()"></TextField>
+                    <StackLayout class="hr-light">
+                        <Label *ngFor="let error of form_validator.telefone" class="errors-line" [text]="error"></Label>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout row="3" class="input-field">
+                    <TextField #password class="input" [isEnabled]="!processing"
+                               hint="Senha" secure="true" [(ngModel)]="user.password"
+                               returnKeyType="next"
+                               (returnPress)="focusConfirmPassword()"></TextField>
+                    <StackLayout class="hr-light">
+                        <Label *ngFor="let error of form_validator.password" class="errors-line" [text]="error"></Label>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout row="4" class="input-field">
+                    <TextField #confirmPassword class="input" hint="Confirme a Senha" [isEnabled]="!processing"
+                               autocorrect="false" secure="true"
+                                [(ngModel)]="user.password_confirmation"
+                               returnKeyType="done"></TextField>
+                    <StackLayout class="hr-light">
+                        <Label *ngFor="let error of form_validator.password_confirmation" class="errors-line" [text]="error"></Label>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
+
+                </StackLayout>
+                <ActivityIndicator rowSpan="5" [busy]="processing"></ActivityIndicator>
+            </GridLayout>
+            </ScrollView>
+
+        <Button text="Cadastrar" [isEnabled]="!processing"
+                (tap)="submit()" class="btn btn-primary m-t-20"></Button>
+    </StackLayout>
+</FlexboxLayout>

@@ -1,0 +1,90 @@
+<ActionBar title="MAPIXO" class="background-color-padrao">
+    <NavigationButton text="Voltar" icon="res://ic_arrow_back_black_24dp" class="go-back" [nsRouterLink]="['/home']" clearHistory="true" pageTransition="slideRight" ></NavigationButton>
+</ActionBar>
+<FlexboxLayout class="page">
+    <StackLayout class="form">
+        <PreviousNextView>
+            <ScrollView scrollBarIndicatorVisible="false" height="100%" class="form scrolview m-t-30" orientation="vertical">
+                <GridLayout rows="auto">
+                    <GridLayout row="0" rows="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto">
+
+                        <Label elevation="4" text="Cadastre um possivel local!" style="font-size: 20em; text-align: center" class="m-t-16" row="0"></Label>
+
+                        <StackLayout row="1" class="input-field m-t-30 espacamento-label-text">
+                            <Label text="&#xf5b7; Descrição breve" class="fas label-text"></Label>
+                            <TextField #descricao class="input" hint="Foco de Dengue" [(ngModel)]="lr.descricao"
+                                       [disabled]="processing"
+                            ></TextField>
+                            <StackLayout *ngIf="lr.descricao == undefined || lr.descricao == ''" class="hr-light linha-error"></StackLayout>
+                            <Label *ngIf="lr.descricao == undefined || lr.descricao == ''" text="Campo obrigatório!" class="label-error"></Label>
+
+                        </StackLayout>
+
+                        <StackLayout row="2" class="input-field espacamento-label-text">
+                            <StackLayout orientation="horizontal">
+                                <Label class="fas label-text" text="&#xf2bb; Av ou Rua" textWrap="true"></Label>
+                                <Label class="fas label-text" text="(Opcional)" textWrap="true" style="font-size: 10pt;"></Label>
+                            </StackLayout>
+                            <TextField #nome class="input" hint="Rua Ceara" [disabled]="processing" [(ngModel)]="lr.nome"></TextField>
+                        </StackLayout>
+
+                        <StackLayout row="3" class="input-field espacamento-label-text">
+                            <StackLayout orientation="horizontal">
+                                <Label text="&#xf2bb; Bairro" class="fas label-text"></Label>
+                                <Label class="fas label-text" text="(Opcional)" textWrap="true" style="font-size: 10pt;"></Label>
+                            </StackLayout>
+                            <TextField #qntd class="input" hint="Centro" [disabled]="processing" [(ngModel)]="lr.qntd"
+                                       returnKeyType="done"></TextField>
+                        </StackLayout>
+
+                        <StackLayout row="4" class="input-field espacamento-label-text">
+                            <Label text="&#xf47f; Localização" class="fas label-text"></Label>
+                            <StackLayout orientation="horizontal">
+                                <Button text="&#xf689;" class="fas btn-design btn btn-color-photo" textWrap="true" [disabled]="processing" (tap)="getLocation()"></Button>
+                                <StackLayout orientation="vertical">
+                                    <Label [attr.text]="'Latitude:  '+lr.localizacao_lat"></Label>
+                                    <Label [attr.text]="'Longitude:  '+lr.localizacao_long"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                            <StackLayout *ngIf="lr.localizacao_lat == undefined" class="hr-light linha-error"></StackLayout>
+                            <Label *ngIf="lr.localizacao_lat == undefined" text="Campo obrigatório!" class="label-error"></Label>
+                        </StackLayout>
+
+                        <StackLayout row="5" class="input-field espacamento-label-text">
+                            <StackLayout orientation="horizontal">
+                                <Label text="&#xf030; Foto  " class="fas label-text"></Label>
+                                <!--                                <Label *ngIf="photoPath == ''" text="    Foto obrigatória!" class="label-error"></Label>-->
+                            </StackLayout>
+                            <Button class="btn-design btn-color-photo fas " text="&#xf030;" [disabled]="processing" (click)="capturePhoto()"></Button>
+                        </StackLayout>
+                        <StackLayout *ngIf="photoPath" row="7" class="m-b-30" horizontalAlignment="center">
+                            <Image [src]="photoPath" width="100%" height="300"></Image>
+                        </StackLayout>
+
+                        <ActivityIndicator class="activity-indicator" rowSpan="7" [busy]="processing"></ActivityIndicator>
+
+                        <StackLayout row="6" class="input-field espacamento-label-text ">
+                            <Button class="btn-design btn-color-add" text="Enviar" [disabled]="processing" (click)="checkCa()"></Button>
+                        </StackLayout>
+
+                        <ListView row="8" [attr.items]="tasks" class="m-b-30 espacamento-label-text">
+                            <ng-template let-item="item">
+                                <StackLayout>
+                                    <Label [attr.text]="'Enviando imagem: '+item.description"></Label>
+                                    <Progress [value]="item.upload" [attr.maxValue]="item.totalUpload"></Progress>
+                                    <Label [attr.text]="'Uploading: ' + item.upload + ' / ' + item.totalUpload"></Label>
+                                    <Label [attr.text]="'Status: ' + item.status"></Label>
+                                </StackLayout>
+                            </ng-template>
+                        </ListView>
+                    </GridLayout>
+                </GridLayout>
+            </ScrollView>
+        </PreviousNextView>
+    </StackLayout>
+</FlexboxLayout>
+<AbsoluteLayout *ngIf="showMessage" width="70%" height="30" class="message" [ngStyle]="{'background-color': background}">
+
+    <Label horizontalAlignment="center" verticalAlignment="center" [text]="message" class="text-message" textWrap="true"></Label>
+
+</AbsoluteLayout>

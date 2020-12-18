@@ -1,0 +1,32 @@
+/* Add mobile styles for the component here.  */
+.page{
+    margin-top: 20;
+    margin-left: 10;
+    margin-right: 10;
+    align-items: center;
+    flex-direction: column;
+}
+
+.btn-redefinir{
+    color: white;
+    font-size: 16pt;
+    font-weight: 600;
+}
+
+.text{
+    font-size: 25pt;
+    text-align: center;
+    margin-top: 30;
+}
+
+.input-btn{
+    margin-top: 30;
+    margin-right: 20;
+    margin-left: 20;
+    padding-top: 20;
+}
+
+.label-error{
+    color: #D51A1A;
+    font-weight: 600;
+}

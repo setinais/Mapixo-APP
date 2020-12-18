@@ -1,0 +1,48 @@
+<GridLayout orientation="vertical" width="100%" height="100%" columns="*"
+            rows="*,auto,auto">
+    <StackLayout col="0" row="0" backgroundColor="#f8f8f8">
+        <GridLayout>
+            <MapView [latitude]="latitude" [longitude]="longitude"
+                     [zoom]="zoom" [minZoom]="minZoom" [maxZoom]="maxZoom" [bearing]="bearing"
+                     [tilt]="tilt" i-padding="50,50,50,50" [padding]="padding" (mapReady)="onMapReady($event)"
+                     (markerSelect)="onMarkerEvent($event)"></MapView>
+<!--            <GridLayout rows="auto, auto, *, auto" class="page">-->
+<!--                <GridLayout row="0" columns="*, *, *, *" >-->
+<!--                    <Button text="Enable Location" col="0" textWrap="true" (tap)="enableLocationTap()"></Button>-->
+<!--                    <Button text="Get Current Location" col="1" textWrap="true" (tap)="buttonGetLocationTap()"></Button>-->
+<!--                    <Button text="Start Monitoring" col="2" textWrap="true" (tap)="buttonStartTap()"></Button>-->
+<!--                    <Button text="Stop Monitoring" col="3" textWrap="true" (tap)="buttonStopTap()"></Button>-->
+<!--                </GridLayout>-->
+<!--                <ListView row="2" [items]="locations">-->
+<!--                    <ng-template let-item="item">-->
+<!--                        <Label text="{{ item.latitude + ', ' + item.longitude + ', ' + item.altitude }}" ></Label>-->
+<!--                    </ng-template>-->
+<!--                </ListView>-->
+<!--                <Button text="Clear" row="3" (tap)="buttonClearTap()"></Button>-->
+<!--            </GridLayout>-->
+        </GridLayout>
+    </StackLayout>
+<!--    <StackLayout *ngIf="showInfo" col="0" row="1" >-->
+<!--        <GridLayout rows="*,*,*,*" columns="auto,auto,auto,auto">-->
+<!--            <Label col="0" row="0" text="Local"></Label>            <Label col="1" row="0" [text]="local"></Label>-->
+<!--            <Label col="0" row="1" text="Quantidade"></Label>       <Label col="1" row="1" text="Quantidade"></Label>-->
+<!--            <Label col="2" row="1" text="Unidade"></Label>          <Label col="3" row="1" text="Unidade"></Label>-->
+<!--            <Label col="0" row="3" text="Data de oferta"></Label>   <Label col="1" row="3" text="Data de oferta"></Label>-->
+<!--        </GridLayout>-->
+<!--    </StackLayout>-->
+    <StackLayout *ngIf="!showInfo" col="0" row="2" orientation="horizontal" backgroundColor="#FFFFFF"
+                 height="60">
+        <GridLayout rows="*" columns="*,*,*,*,*">
+            <Label col="0" row="0" class="fas fa-3x" text="&#xf015;" style="font-size: 22em;" height="25" width="25"
+                   margin="10"></Label>
+            <Label col="1" row="0" class="fas" style="font-size: 22em;" height="25" width="25"
+                   margin="10" text="&#xf7a0;" [nsRouterLink]="['/ofertamaterial']" pageTransition="slideLeft"></Label>
+            <Label col="2" row="0" class="fas" text="&#xf5a0;" style="font-size: 45em;" height="60" width="60"
+                   margin="10"></Label>
+            <Label col="3" row="0" class="fas" height="25" style="font-size: 22em;" width="25"
+                   margin="10" text="&#xf496;"></Label>
+            <Label col="4" row="0" class="fas" height="25" style="font-size: 22em;" width="25"
+                   margin="10" text="&#xf2bb;" [nsRouterLink]="['/putuser']" pageTransition="slideLeft"></Label>
+        </GridLayout>
+    </StackLayout>
+</GridLayout>
