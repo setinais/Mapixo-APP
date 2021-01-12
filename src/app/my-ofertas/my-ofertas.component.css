@@ -1,0 +1,137 @@
+.body-uni{
+    margin-top: 10;
+}
+.owe-list-item {
+    background-color: white;
+    border-radius: 15;
+    margin: 15;
+}
+
+.owe-list {
+    /*margin: 15 15 15 15;*/
+}
+
+.owe-main-info {
+    padding: 10 15;
+}
+
+.owe-category-icon {
+    width: 45;
+    height: 45;
+    margin-right: 15;
+}
+
+.owe-info-container {
+    color: #c0c0c0;
+    font-weight: 300;
+}
+
+.owe-title {
+    font-weight: 600;
+    color: black;
+}
+
+.lender-name {
+    font-size: 12em;
+    font-weight: 500;
+    margin-top: 20%;
+}
+.lender-bairro {
+    font-size: 12em;
+
+}
+.lender-phone{
+    font-size: 12em;
+    margin-top: 20%;
+}
+.owe-ammount {
+    color: black;
+}
+
+.time-information {
+    margin: 0;
+}
+
+.owe-secondary-info {
+    padding: 10 10 10 13;
+    border-top-width: 1;
+    border-color: #e8e7e7;
+}
+
+.divider {
+    height: 15;
+    background-color: #f8f9fa;
+}
+
+.location {
+    font-size: 13em;
+    background-color: white;
+    border-color: white;
+    padding: 0 10 0 10;
+    margin: 0;
+    /*color: darkred;*/
+    color: #b72806;
+}
+.btn-color-location{
+    background-color: #f8f9fa;
+    color: #e64a45;
+}
+.btn-color-edit{
+    background-color: #f8f9fa;
+    color: blue;
+}
+.btn-color-sucess{
+    background-color: #f8f9fa;
+    color: #01d03a;
+}
+.btn-design{
+    margin-right: 5;
+    font-size: 20em;
+    width: 40;
+    height: 40;
+    padding: 0 0 0;
+    border-radius: 50%;
+}
+.action-bar-per{
+    color: white;
+}
+.go-back{
+    color: white;
+    border-color: white;
+    border-width: 0;
+    opacity: 1;
+}
+.message{
+    border-radius: 10;
+    margin-top: 70%;
+}
+.text-message{
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 13pt;
+    margin: 5;
+}
+
+.tabview-active {
+    border-bottom-color: white;
+    border-bottom-width: 3;
+    margin: 0;
+    height: 50;
+}
+.tabviewText {
+    margin-top: 15;
+    margin-bottom: 5;
+    font-size: 13;
+    color: #d8d2d2;
+    horizontal-align: center;
+}
+.tabviewText-active {
+    margin-top: 15;
+    margin-bottom: 5;
+    font-weight: bold;
+    color: white;
+    vertical-align: center;
+}
+.navTab {
+    background-color: #006600;
+}

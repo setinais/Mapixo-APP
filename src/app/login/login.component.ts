@@ -42,7 +42,6 @@ export class LoginComponent {
     }
 
     login() {
-        console.log(this.user)
         this.userService.login(this.user)
             .subscribe(response => {
                 this.processing = false;

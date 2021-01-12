@@ -1,0 +1,97 @@
+<ActionBar title="Minhas Ofertas" class="action-bar-per background-color-padrao">
+    <NavigationButton text="Voltar" icon="res://ic_arrow_back_black_24dp" class="go-back" [nsRouterLink]="['/home']" clearHistory="true" pageTransition="slideRight" ></NavigationButton>
+</ActionBar>
+<GridLayout rows="auto,*" columns="auto">
+    <GridLayout row="0" col="0" #navTab class="navTab" verticalAlignment="top" height="50"
+                width="100%" rows="auto" columns="*,*" color="#FFFFFF">
+
+        <GridLayout [class]="selectedTabview==0?'tabview-active':'tabview'"
+                    (tap)="onPendentes()" rows="*" columns="auto" col="0" row="0" width="50%">
+            <Label [class]="selectedTabview==0?'tabviewText-active':'tabviewText'" class="m-l-25"
+                   row="0" text="PENDENTES"></Label>
+        </GridLayout>
+        <GridLayout [class]="selectedTabview==1?'tabview-active':'tabview'"
+                    (tap)="onConcluidas()" rows="*" columns="auto" col="1" row="0"
+                    width="50%">
+            <Label [class]="selectedTabview==1?'tabviewText-active':'tabviewText'" class="m-l-25"
+                   row="0" text="CONCLUIDAS"></Label>
+        </GridLayout>
+    </GridLayout>
+<ScrollView row="2" col="0" backgroundColor="#e8e7e7" scrollBarIndicatorVisible="false" *ngIf="selectedTabview == 0">
+    <FlexboxLayout flexDirection="column" class="owe-list body-uni"
+                   backgroundColor="#e8e7e7">
+        <Label *ngIf="dados.length == 0" text="Não foi possivel encontrar nada!"></Label>
+        <StackLayout shadow elevation="3" *ngFor="let dado of dados" id="item1"  orientation="vertical" class="owe-list-item"
+                     width="100%">
+            <GridLayout columns="auto, *, auto" rows="auto"
+                        width="100%" height="auto" class="owe-main-info"
+                        verticalAlignment="top">
+                <Image row="0" col="0" [src]="dado.foto"
+                       class="owe-category-icon"></Image>
+                <StackLayout row="0" col="1" orientation="vertical"
+                             class="owe-info-container">
+                    <Label class="owe-title" [text]="dado.nome"></Label>
+                    <GridLayout columns="auto,auto,"
+                                rows="auto,auto" width="100%">
+                        <Label [text]="dado.descricao" class="lender-bairro" col="0" row="0"></Label>
+                        <Label [text]="dado.classificacao_id +': '+ dado.qntd+' '+dado.unidade_medida_id" class="lender-name"
+                               row="1" col="0"></Label>
+
+                    </GridLayout>
+                </StackLayout>
+            </GridLayout>
+            <GridLayout columns="auto,*, auto, auto, auto, auto" rows="auto"
+                        width="100%" height="auto" class="owe-secondary-info">
+                <Label row="0" col="0" text="Criado em: {{ dado.created_at | date:'dd/MM/yy' }} "></Label>
+
+                <Button text="&#xf044;"  col="3" class="btn fas location color-padrao btn-design btn-color-edit m-r-20" (tap)="onEdit(dado)"></Button>
+                <Button text="&#xf14a;"  col="4" class="btn fas location color-padrao btn-design btn-color-sucess m-r-20" (tap)="sucess(dado)"></Button>
+                <Button text="&#xf1f8;"  col="5" class="btn fas location color-padrao btn-design btn-color-location" (tap)="delete(dado)"></Button>
+<!--                    <Label row="0" c
+ol="2" text="&#xf095;"-->
+<!--                           class="lender-name fas"></Label>-->
+            </GridLayout>
+        </StackLayout>
+    </FlexboxLayout>
+</ScrollView>
+    <ScrollView row="2" col="0" backgroundColor="#e8e7e7" scrollBarIndicatorVisible="false" *ngIf="selectedTabview == 1">
+        <FlexboxLayout flexDirection="column" class="owe-list body-uni"
+                       backgroundColor="#e8e7e7">
+            <Label *ngIf="concluidos.length == 0" text="Não foi possivel encontrar nada!"></Label>
+            <StackLayout shadow elevation="3" *ngFor="let dado of concluidos" id="item1"  orientation="vertical" class="owe-list-item"
+                         width="100%">
+                <GridLayout columns="auto, *, auto" rows="auto"
+                            width="100%" height="auto" class="owe-main-info"
+                            verticalAlignment="top">
+                    <Image row="0" col="0" [src]="dado.foto"
+                           class="owe-category-icon"></Image>
+                    <StackLayout row="0" col="1" orientation="vertical"
+                                 class="owe-info-container">
+                        <Label class="owe-title" [text]="dado.nome"></Label>
+                        <GridLayout columns="auto,auto,"
+                                    rows="auto,auto" width="100%">
+                            <Label [text]="dado.descricao" class="lender-bairro" col="0" row="0"></Label>
+                            <Label [text]="dado.classificacao_id +': '+ dado.qntd+' '+dado.unidade_medida_id" class="lender-name"
+                                   row="1" col="0"></Label>
+
+                        </GridLayout>
+                    </StackLayout>
+                </GridLayout>
+                <GridLayout columns="auto,*, auto, auto, auto, auto" rows="auto, auto"
+                            width="100%" height="auto" class="owe-secondary-info">
+                    <Label row="0" col="0" text="Data criação: {{ dado.created_at | date:'dd/MM/yy' }}"></Label>
+                    <Label row="1" col="0" text="Finalizado em: {{ dado.updated_at | date:'dd/MM/yy' }} "></Label>
+                    <Button text="&#xf1f8;" rowSpan="2" col="5" class="btn fas location color-padrao btn-design btn-color-location" (tap)="delete(dado)"></Button>
+                    <!--                    <Label row="0" c
+                    ol="2" text="&#xf095;"-->
+                    <!--                           class="lender-name fas"></Label>-->
+                </GridLayout>
+            </StackLayout>
+        </FlexboxLayout>
+    </ScrollView>
+</GridLayout>
+<AbsoluteLayout *ngIf="showMessage" width="70%" height="30" class="message" [ngStyle]="{'background-color': background}">
+
+    <Label horizontalAlignment="center" verticalAlignment="center" [text]="message" class="text-message" textWrap="true"></Label>
+
+</AbsoluteLayout>

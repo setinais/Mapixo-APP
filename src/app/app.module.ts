@@ -13,6 +13,9 @@ import {OfertaMaterialComponent} from "./oferta-material/oferta-material.compone
 import {PutuserComponent} from "./putuser/putuser.component";
 import {RedefinirSenhaComponent} from "./redefinir-senha/redefinir-senha.component";
 import {FloatLabel} from "../styles/float-label";
+import {HomeDetailComponent} from "./home-detail/home-detail.component";
+import {MyOfertasComponent} from "./my-ofertas/my-ofertas.component";
+import {MyOfertasEditComponent} from "./my-ofertas-edit/my-ofertas-edit.component";
 
 @NgModule({
     bootstrap: [
@@ -33,7 +36,10 @@ import {FloatLabel} from "../styles/float-label";
         OfertaMaterialComponent,
         PutuserComponent,
         RedefinirSenhaComponent,
-        FloatLabel
+        FloatLabel,
+        HomeDetailComponent,
+        MyOfertasComponent,
+        MyOfertasEditComponent
     ],
     providers: [
         {

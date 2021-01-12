@@ -35,6 +35,7 @@
     "@nativescript/theme": "~3.0.0",
     "nativescript-geolocation": "^5.1.0",
     "nativescript-google-maps-sdk": "^3.0.1",
+    "nativescript-phone": "^2.0.0",
     "reflect-metadata": "~0.1.12",
     "rxjs": "^6.6.0",
     "zone.js": "~0.11.1"

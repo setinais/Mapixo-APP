@@ -32,16 +32,16 @@
 <!--    </StackLayout>-->
     <StackLayout *ngIf="!showInfo" col="0" row="2" orientation="horizontal" backgroundColor="#FFFFFF"
                  height="60">
-        <GridLayout rows="*" columns="*,*,*,*,*">
-            <Label col="0" row="0" class="fas fa-3x" text="&#xf015;" style="font-size: 22em;" height="25" width="25"
-                   margin="10"></Label>
-            <Label col="1" row="0" class="fas" style="font-size: 22em;" height="25" width="25"
+        <GridLayout rows="*" columns="*,*,*,*">
+<!--            <Label col="0" row="0" class="fas fa-3x" text="&#xf015;" style="font-size: 22em;" height="25" width="25"-->
+<!--                   margin="10"></Label>-->
+            <Label col="0" row="0" class="fas" style="font-size: 22em;" height="25" width="25"
                    margin="10" text="&#xf7a0;" [nsRouterLink]="['/ofertamaterial']" pageTransition="slideLeft"></Label>
-            <Label col="2" row="0" class="fas" text="&#xf5a0;" style="font-size: 45em;" height="60" width="60"
+            <Label col="1" row="0" class="fas" text="&#xf5a0;" style="font-size: 22em;" height="25" width="25"
                    margin="10"></Label>
+            <Label col="2" row="0" class="fas" height="25" style="font-size: 22em;" width="25"
+                   margin="10" text="&#xf496;" [nsRouterLink]="['/my-ofertas']" pageTransition="slideLeft"></Label>
             <Label col="3" row="0" class="fas" height="25" style="font-size: 22em;" width="25"
-                   margin="10" text="&#xf496;"></Label>
-            <Label col="4" row="0" class="fas" height="25" style="font-size: 22em;" width="25"
                    margin="10" text="&#xf2bb;" [nsRouterLink]="['/putuser']" pageTransition="slideLeft"></Label>
         </GridLayout>
     </StackLayout>

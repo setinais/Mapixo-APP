@@ -9,7 +9,7 @@
                     <GridLayout row="0" rows="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto">
 
                         <Label elevation="4" text="Cadastre um possivel local!" style="font-size: 20em; text-align: center" class="m-t-16" row="0"></Label>
-<!--                        Nome-->
+                        <!--                        Nome-->
                         <StackLayout row="1" class="input-field m-t-30 espacamento-label-text">
 
                             <GridLayout rows="*" columns="*, auto">
@@ -33,13 +33,13 @@
                                 </GridLayout>
                             </GridLayout>
                         </StackLayout>
-<!--                        Descricao-->
+                        <!--                        Descricao-->
                         <GridLayout row="2" class="input-field m-t-10 espacamento-label-text" rows="auto, *" columns="auto,*">
                             <Label row="0" col="0" text="&#xf5b7; Descrição breve" class="fas label-text"></Label>
                             <Label row="0" col="1" *ngIf="lr.descricao == undefined || lr.nome == ''" class="fas label-text" text="  (Obrigatório)" class="label-error" textWrap="true" style="font-size: 10pt;"></Label>
                             <TextField  row=1 colSpan="2" #descricao class="input" [(ngModel)]="lr.descricao" [disabled]="processing"></TextField>
                         </GridLayout>
-<!--                        Quantidade / Unidade-->
+                        <!--                        Quantidade / Unidade-->
                         <StackLayout row="3"  class="input-field m-t-10 espacamento-label-text">
                             <GridLayout rows="*" columns="auto, *">
                                 <StackLayout row="0" col="0" class="input-field espacamento-label-text">
@@ -58,7 +58,7 @@
                             </GridLayout>
                         </StackLayout>
 
-<!--                        Tipo Negociacao-->
+                        <!--                        Tipo Negociacao-->
                         <StackLayout row="4" class="input-field espacamento-label-text">
                             <GridLayout rows="*" columns="auto, *">
                                 <StackLayout row="0" col="0">

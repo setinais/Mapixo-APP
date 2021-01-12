@@ -1,0 +1,37 @@
+<ActionBar title="Detalhes" class="action-bar-per background-color-padrao">
+    <NavigationButton text="Voltar" icon="res://ic_arrow_back_black_24dp" class="go-back" [nsRouterLink]="['/home']" clearHistory="true" pageTransition="slideRight" ></NavigationButton>
+</ActionBar>
+<ScrollView orientation="vertical">
+    <StackLayout>
+        <GridLayout rows="auto,auto,auto,auto, auto, auto, auto, auto,auto" columns="auto, auto">
+            <Image class="image-detail" row="0" colSpan="2" [src]="ofertaDetail.foto"></Image>
+            <Label col="0" row="1" class="m-t-8 m-l-8 label-name" [text]="ofertaDetail.nome"></Label>
+            <Label col="1" row="2" class="m-t-8 m-l-8 label-descricao" text="Descrição:"></Label>
+            <Label col="1" row="3" class="m-t-8 m-l-8 label-info" [text]="ofertaDetail.descricao"></Label>
+            <Label col="0" row="2" class="m-t-8 m-l-8 label-descricao" text="Quantidade:"></Label>
+            <Label col="0" row="3" class="m-t-8 m-l-8 label-info" [text]="ofertaDetail.qntd +' '+ ofertaDetail.unidade_medida_id "></Label>
+            <Label col="0" row="4" class="m-t-8 m-l-8 label-descricao" text="Classificação do Material"></Label>
+            <Label col="0" row="6" class="m-t-8 m-l-8 label-descricao" text="Valor total"></Label>
+            <Label col="0" row="5" class="m-t-8 m-l-8 label-info" [text]="ofertaDetail.classificacao_id"></Label>
+            <Label col="0" row="7" class="m-t-8 m-l-8 label-info" [text]="'R$ '+ (ofertaDetail.valor == null ? '-' : ofertaDetail.valor)  "></Label>
+            <Label col="1" row="4" class="m-t-8 m-l-8 label-descricao" text="Contato"></Label>
+            <Label col="1" row="5" class="m-t-8 m-l-8 label-info" [text]="ofertaDetail.user_id.name"></Label>
+            <Label col="1" row="6" class="m-t-8 m-l-8 label-info" [text]="ofertaDetail.user_id.email"></Label>
+            <Label col="1" row="7" class="m-t-8 m-l-8 label-info" [text]="ofertaDetail.user_id.telefone"></Label>
+        </GridLayout>
+    </StackLayout>
+</ScrollView>
+<AbsoluteLayout width="100%" height="100%">
+    <StackLayout class="btn-location">
+        <StackLayout style="padding-bottom: 5%">
+            <Button text="&#xf3c5;" class="fas btn-design background-color-padrao" (tap)="onNavigate()"></Button>
+        </StackLayout>
+            <Button text="&#xf095;" class="fas btn-design background-color-padrao" (tap)="onPhone(ofertaDetail.user_id.telefone)"></Button>
+    </StackLayout>
+</AbsoluteLayout>
+
+<AbsoluteLayout *ngIf="showMessage" width="70%" height="30" class="message" [ngStyle]="{'background-color': background}">
+
+    <Label horizontalAlignment="center" verticalAlignment="center" [text]="message" class="text-message" textWrap="true"></Label>
+
+</AbsoluteLayout>

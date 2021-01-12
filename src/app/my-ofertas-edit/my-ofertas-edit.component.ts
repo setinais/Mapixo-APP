@@ -2,32 +2,31 @@ import { Component, OnInit } from '@angular/core';
 import {requestCameraPermissions, takePicture} from "@nativescript/camera";
 import * as bgHttp from "@nativescript/background-http"
 import {Image} from "@nativescript/core/ui/image";
-import {Classificacao, OfertaModel, UnidadeMedida} from "../../models/oferta.model";
+import {Classificacao, OfertaModel, OfertaResponseModel, UnidadeMedida} from "../../models/oferta.model";
 import { Accuracy } from "@nativescript/core/ui/enums";
 import {url_api} from "../../env/url-default"
 import {getString} from "@nativescript/core/application-settings";
 import {isAndroid} from "@nativescript/core/platform";
 import {ImageSource} from "@nativescript/core/image-source";
-import {RouterExtensions} from "@nativescript/angular";
+import {PageRoute, RouterExtensions} from "@nativescript/angular";
 import {Page} from "@nativescript/core/ui/page";
 import {OfertaService} from "../../services/oferta.service";
 import * as geolocation from "nativescript-geolocation";
 import { EventData, fromObject } from "@nativescript/core/data/observable";
 import { ListPicker } from '@nativescript/core/ui/list-picker';
+import {switchMap} from "rxjs/operators";
 @Component({
-  selector: 'ns-oferta-material',
-  templateUrl: './oferta-material.component.html',
-  styleUrls: ['./oferta-material.component.css']
+    templateUrl: './my-ofertas.component.html',
+    styleUrls: ['./my-ofertas.component.css'],
 })
-export class OfertaMaterialComponent implements OnInit {
+export class MyOfertasEditComponent implements OnInit {
 
     public processing:boolean = false
-    lr: OfertaModel
+    lr: OfertaResponseModel
     public image
     public photoPath: string = ""
     public endereco
-    pageList: any
-    items = ["Batman", "Joker", "Bane"];
+    itemId: any
 
     public tipo_nego: Array<string> = ['Venda', 'Doação', 'Reciclagem']
     public unidade_med: Array<string> = []
@@ -41,26 +40,33 @@ export class OfertaMaterialComponent implements OnInit {
     private message: string = ""
     private background: any
 
-  constructor(private lrs: OfertaService, private page: Page, private rt: RouterExtensions) {
-      this.lr = new OfertaModel()
-      this.lr.foto = ""
-      this.lrs.getClassificao().subscribe(res => {
-          this.classificacao = res['data']
-      }, error => {
-      })
-      this.lrs.getUnidademedida().subscribe(res => {
-          this.unidade_med = res['data']
-      }, error => {
+    constructor(private lrs: OfertaService, private page: Page, private rt: RouterExtensions, private pageRoute: PageRoute) {
+        this.lr = new OfertaResponseModel()
+        this.lr.foto = ""
+        this.lrs.getClassificao().subscribe(res => {
+            this.classificacao = res['data']
+        }, error => {
+        })
+        this.lrs.getUnidademedida().subscribe(res => {
+            this.unidade_med = res['data']
+        }, error => {
 
-      })
-  }
-  ngOnInit(): void {
-      requestCameraPermissions()
-      this.image = new Image()
-  }
+        })
+    }
+    ngOnInit(): void {
+        this.pageRoute.activatedRoute.pipe(
+            switchMap(activatedRoute => activatedRoute.params)
+        ).forEach((params) => {
+            this.lrs.index(+params["id"]).subscribe(response => {
+                this.lr = response['data']
+                console.log(this.lr)
+            }, error => {alert('Servidor fora do ar!'); })
+        })
+        this.image = new Image()
+    }
     public onSelectedIndexChangedUnidade(args: EventData) {
         const picker = <ListPicker>args.object;
-        this.lr.unidade_medida = this.unidade_med[picker.selectedIndex]
+        this.lr.unidade_medida_id = this.unidade_med[picker.selectedIndex]
     }
     public onSelectedIndexChanged(args: EventData) {
         const picker = <ListPicker>args.object;
@@ -69,7 +75,7 @@ export class OfertaMaterialComponent implements OnInit {
     }
     public onSelectedIndexChangedClassificacao(args: EventData) {
         const picker = <ListPicker>args.object;
-        this.lr.classificacao = this.classificacao[picker.selectedIndex]
+        this.lr.classificacao_id = this.classificacao[picker.selectedIndex]
     }
     checkCa(){
 
@@ -80,23 +86,13 @@ export class OfertaMaterialComponent implements OnInit {
             cont = false
         if(this.lr.nome == undefined)
             cont = false
-        if(this.lr.localizacao_lat == undefined)
-            cont = false
         if(this.lr.foto == "")
             cont = false
         if(cont)
-            this.store()
+            this.update()
 
     }
-    store(){
-        this.processing = true
-        this.lrs.store(this.lr).subscribe(response => {
-            this.upload(response['data']['id']);
-            this.processing = false
-        }, error => {
-            this.processing = false
-        })
-    }
+    update(){}
     capturePhoto() {
         let options = {
             width: 250,
@@ -110,7 +106,7 @@ export class OfertaMaterialComponent implements OnInit {
                 this.image.imageSource = image
                 if(isAndroid)
                     this.lr.foto = image['_android']
-                    this.photoPath = image['_android']
+                this.photoPath = image['_android']
                 ImageSource.fromAsset(image)
                     .then(img => {
                         let base64 = img.toBase64String("jpeg", 100)
@@ -128,8 +124,8 @@ export class OfertaMaterialComponent implements OnInit {
             timeout: 10000
         }).then(function (loc) {
             if (loc) {
-                that.lr.localizacao_lat = loc.latitude;
-                that.lr.localizacao_long = loc.longitude;
+                that.lr.localizacao_id.latitude = loc.latitude;
+                that.lr.localizacao_id.longitude = loc.longitude;
                 // fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + loc.latitude + "," + loc.longitude + "&key=AIzaSyBOMiyrIQJ1opY_cyC97qrvTvU9kceukhw")
                 //     .then((response) => response.json()).then((r) => {
                 //     console.log(r);
@@ -247,7 +243,7 @@ export class OfertaMaterialComponent implements OnInit {
 
     successImage(data){
         this.processing = false;
-        this.lr = new OfertaModel()
+        this.lr = new OfertaResponseModel()
         this.session = bgHttp.session("image-upload");
         this.tasks = [];
         this.events = [];
@@ -259,9 +255,4 @@ export class OfertaMaterialComponent implements OnInit {
             this.showMessage = false
         }, 3000);
     }
-
-
-
-
-
 }

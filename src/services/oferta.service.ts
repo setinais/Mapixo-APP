@@ -12,15 +12,31 @@ export class OfertaService {
     constructor(private http:HttpClient) {  }
 
     store(user: OfertaModel){
-        return this.http.post(`${url_api}user/store`, user)
+        return this.http.post(`${url_api}oferta`, user)
     }
     show(){
-        return this.http.get(`${url_api}user/show`)
+        return this.http.get(`${url_api}oferta`)
+    }
+    index(id: number){
+        return this.http.get(`${url_api}oferta/${id}`)
     }
     put(user:OfertaModel, id){
-        return this.http.put(`${url_api}user/update`, user);
+        return this.http.put(`${url_api}oferta`, user);
     }
     delete(id: number){
-        return this.http.delete(`${url_api}user/delete`)
+        return this.http.delete(`${url_api}oferta/${id}`)
+    }
+
+    getClassificao(){
+        return this.http.get(`${url_api}classificacao`)
+    }
+    getUnidademedida(){
+        return this.http.get(`${url_api}unidade_medida`)
+    }
+    getOfertasUser(){
+        return this.http.get(`${url_api}getOfertasUser`)
+    }
+    sucess(id: number){
+        return this.http.get(`${url_api}sucessOferta/${id}`)
     }
 }

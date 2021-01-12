@@ -1,9 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {registerElement} from "@nativescript/angular";
+import {registerElement, RouterExtensions} from "@nativescript/angular";
 import { MapView, Marker, Position } from 'nativescript-google-maps-sdk';
 registerElement('MapView', () => MapView);
 import * as geolocation from "nativescript-geolocation";
 import { Accuracy } from "@nativescript/core/ui/enums";
+import {OfertaService} from "../../services/oferta.service";
+import {OfertaResponseModel} from "../../models/oferta.model";
+import {timer} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'ns-home',
@@ -15,7 +19,7 @@ export class HomeComponent implements OnInit{
 
     latitude =  -10.173044;
     longitude = -48.885372;
-    zoom = 16;
+    zoom = 14;
     minZoom = 0;
     maxZoom = 22;
     bearing = 0;
@@ -27,12 +31,23 @@ export class HomeComponent implements OnInit{
     locations = [];
     watchIds = [];
 
-    constructor() {
+    ofertas: Array<OfertaResponseModel> = []
+
+    constructor(private ofertaService: OfertaService, private route: RouterExtensions) {
     }
 
     ngOnInit(): void {
+        this.getOfertas()
+        // timer(5000).subscribe(x => {
+        //    this.getOfertas()
+        // });
     }
-
+    getOfertas(){
+        this.ofertaService.show().subscribe(res =>{
+            this.ofertas = res['data']
+            this.setOfertasMap()
+        }, error => {})
+    }
     public enableLocationTap() {
         geolocation.isEnabled().then(function (isEnabled) {
             if (!isEnabled) {
@@ -98,24 +113,34 @@ export class HomeComponent implements OnInit{
     }
     // Map events
     onMapReady(event) {
-        console.log('Map Ready');
         this.mapView = event.object;
-
-        for (let i = 0; i < 12; i++) {
+        this.setOfertasMap()
+    }
+    setOfertasMap(){
+        for (let i = 0;i < this.ofertas.length; i++){
             var marker = new Marker();
-            marker.position = Position.positionFromLatLng(-10.173044 + (0.001000 * i), -48.885372 + (0.000200 * i));
-            marker.title = "Paraiso do Tocantins" + i;
-            marker.snippet = "Brasil" + i;
-            marker.userData = {index: 1};
+            marker.position = Position.positionFromLatLng(this.ofertas[i].localizacao_id.latitude, this.ofertas[i].localizacao_id.longitude);
+            marker.title = this.ofertas[i].nome;
+            marker.snippet = this.ofertas[i].descricao;
+            marker.userData = {index: this.ofertas[i].id};
             marker.color = '#32CD32';
 
             this.mapView.addMarker(marker);
         }
     }
     onMarkerEvent(args) {
-        console.log("Marker Event: '" + args.eventName
-            + "' triggered on: " + args.marker.title
-            + ", Lat: " + args.marker.position.latitude + ", Lon: " + args.marker.position.longitude, args);
+        this.route.navigate(['home-detail'],{
+            clearHistory: false,
+            animated: true,
+            transition: {
+                name: 'slideBottom',
+                duration: 500,
+                curve: 'ease'
+            },
+            queryParams: {
+                id: args.marker.userData.index
+            }
+            ,
+        })
     }
-
 }
