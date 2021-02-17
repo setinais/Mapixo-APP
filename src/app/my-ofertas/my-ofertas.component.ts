@@ -10,13 +10,13 @@ import {OfertaService} from "../../services/oferta.service";
 })
 export class MyOfertasComponent implements OnInit {
 
-    dados: Array<OfertaResponseModel>
+    dados: Array<OfertaResponseModel> = []
     showMessage: boolean = false
     background: any
     message: string = "";
     selectedTabview = 0;
 
-    concluidos: Array<OfertaResponseModel>
+    concluidos: Array<OfertaResponseModel> = []
     constructor(private page: Page,
                 private _router: RouterExtensions,
                 private route: ActivatedRoute,
@@ -25,7 +25,15 @@ export class MyOfertasComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.ofertaService.getOfertasUser().subscribe(response => {this.dados = response['data']['pendetes']; this.concluidos = response['data']['concluidas']}, error => {alert('Servidor fora do ar!'); this._router.back()})
+        this.ofertaService.getOfertasUser().subscribe(response => {
+            // if(response['data'] != 0) {
+                this.dados = response['data']['pendetes'];
+                this.concluidos = response['data']['concluidas']
+            // }
+            }, error => {
+            alert('Servidor fora do ar!');
+            this._router.back()
+        })
     }
 
     delete(id: OfertaResponseModel){

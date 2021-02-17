@@ -1,5 +1,5 @@
 <ActionBar title="MAPIXO" class="background-color-padrao">
-    <NavigationButton text="Voltar" icon="res://ic_arrow_back_black_24dp" class="go-back" [nsRouterLink]="['/home']" clearHistory="true" pageTransition="slideRight" ></NavigationButton>
+    <NavigationButton text="Voltar" icon="res://ic_arrow_back_black_24dp" class="go-back" [nsRouterLink]="['/my-ofertas']" clearHistory="true" pageTransition="slideRight" ></NavigationButton>
 </ActionBar>
 <FlexboxLayout class="page">
     <StackLayout class="form">
@@ -53,7 +53,7 @@
                                 <!--                        unidade_medida-->
                                 <StackLayout row="0" col="1" class="input-field espacamento-label-text">
                                     <Label row="0" col="1" text="&#xf5b7; Unidade Medida" class="fas label-text m-l-25"></Label>
-                                    <ListPicker row="0" col="1" [items]="unidade_med" selectedIndex="0" class="picker" (selectedIndexChange)="onSelectedIndexChangedUnidade($event)"></ListPicker>
+                                    <ListPicker #unidade_medida_picker row="0" col="1" [selectedIndex]="selectedIndexMedida" [items]="unidade_med" class="picker" (selectedIndexChange)="onSelectedIndexChangedUnidade($event)"></ListPicker>
                                 </StackLayout>
                             </GridLayout>
                         </StackLayout>
@@ -63,11 +63,11 @@
                             <GridLayout rows="*" columns="auto, *">
                                 <StackLayout row="0" col="0">
                                     <Label class="fas label-text" text="&#xf2bb; Tipo negociação" textWrap="true"></Label>
-                                    <ListPicker [items]="tipo_nego" selectedIndex="0" class="picker" (selectedIndexChange)="onSelectedIndexChanged($event)"></ListPicker>
+                                    <ListPicker #tipo_picker [items]="tipo_nego" [selectedIndex]="selectedIndexTipo" class="picker" (selectedIndexChange)="onSelectedIndexChanged($event)"></ListPicker>
                                 </StackLayout>
                                 <StackLayout row="0" col="1">
                                     <Label class="fas label-text" text="&#xf2bb; Classificacao Material" textWrap="true"></Label>
-                                    <ListPicker [items]="classificacao" selectedIndex="0" class="picker" (selectedIndexChange)="onSelectedIndexChangedClassificacao($event)"></ListPicker>
+                                    <ListPicker #classificacao_picker [items]="classificacao" [selectedIndex]="selectedIndexClassi" class="picker" (selectedIndexChange)="onSelectedIndexChangedClassificacao($event)"></ListPicker>
                                 </StackLayout>
                             </GridLayout>
                         </StackLayout>
@@ -77,13 +77,10 @@
                             <StackLayout orientation="horizontal">
                                 <Button text="&#xf689;" class="fas btn-design btn btn-color-photo" textWrap="true" [disabled]="processing" (tap)="getLocation()"></Button>
                                 <StackLayout orientation="vertical">
-                                    <Label [attr.text]="'Latitude:  '+lr.localizacao_lat"></Label>
-                                    <Label [attr.text]="'Longitude:  '+lr.localizacao_long"></Label>
+                                    <Label [attr.text]="'Latitude:  '+lr.localizacao_id.latitude"></Label>
+                                    <Label [attr.text]="'Longitude:  '+lr.localizacao_id.longitude"></Label>
                                 </StackLayout>
                             </StackLayout>
-                            <StackLayout *ngIf="lr.localizacao_lat == undefined" class="hr-light linha-error"></StackLayout>
-                            <Label *ngIf="lr.localizacao_lat == undefined" text="Campo obrigatório!" class="label-error"></Label>
-                            <Label *ngIf="!lr.localizacao_lat == undefined" text="{{ endereco }}"></Label>
                         </StackLayout>
 
                         <StackLayout row="6" class="input-field espacamento-label-text">

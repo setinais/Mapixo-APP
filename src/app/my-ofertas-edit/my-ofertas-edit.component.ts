@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {requestCameraPermissions, takePicture} from "@nativescript/camera";
 import * as bgHttp from "@nativescript/background-http"
 import {Image} from "@nativescript/core/ui/image";
@@ -16,8 +16,8 @@ import { EventData, fromObject } from "@nativescript/core/data/observable";
 import { ListPicker } from '@nativescript/core/ui/list-picker';
 import {switchMap} from "rxjs/operators";
 @Component({
-    templateUrl: './my-ofertas.component.html',
-    styleUrls: ['./my-ofertas.component.css'],
+    templateUrl: './my-ofertas-edit.component.html',
+    styleUrls: ['./my-ofertas-edit.component.css'],
 })
 export class MyOfertasEditComponent implements OnInit {
 
@@ -27,10 +27,15 @@ export class MyOfertasEditComponent implements OnInit {
     public photoPath: string = ""
     public endereco
     itemId: any
+    update_foto: boolean = false
 
     public tipo_nego: Array<string> = ['Venda', 'Doação', 'Reciclagem']
     public unidade_med: Array<string> = []
     public classificacao: Array<string> = []
+
+    selectedIndexMedida: number = 0;
+    selectedIndexClassi: number = 0;
+    selectedIndexTipo: number = 0;
 
     public tasks: bgHttp.Task[] = [];
     public events: { eventTitle: string, eventData: any }[] = [];
@@ -40,26 +45,34 @@ export class MyOfertasEditComponent implements OnInit {
     private message: string = ""
     private background: any
 
+    @ViewChild("unidade_medida_picker", {static: false}) unidade_medida_picker: ListPicker;
+    @ViewChild("classificacao_picker", {static: false}) classificacao_picker: ListPicker;
+    @ViewChild("tipo_picker", {static: false}) tipo_picker: ListPicker;
+
     constructor(private lrs: OfertaService, private page: Page, private rt: RouterExtensions, private pageRoute: PageRoute) {
         this.lr = new OfertaResponseModel()
         this.lr.foto = ""
-        this.lrs.getClassificao().subscribe(res => {
-            this.classificacao = res['data']
-        }, error => {
-        })
-        this.lrs.getUnidademedida().subscribe(res => {
-            this.unidade_med = res['data']
-        }, error => {
 
-        })
     }
+
     ngOnInit(): void {
         this.pageRoute.activatedRoute.pipe(
             switchMap(activatedRoute => activatedRoute.params)
         ).forEach((params) => {
             this.lrs.index(+params["id"]).subscribe(response => {
                 this.lr = response['data']
-                console.log(this.lr)
+                this.lrs.getClassificao().subscribe(res => {
+                    this.classificacao = res['data']
+                    this.classificacao_picker.selectedIndex = this.classificacao.indexOf(this.lr.classificacao_id)
+                    this.selectedIndexClassi = this.classificacao.indexOf(this.lr.classificacao_id)
+                    this.tipo_picker.selectedIndex = this.tipo_nego.indexOf(this.lr.tipo_negociacao)
+                    this.selectedIndexTipo = this.tipo_nego.indexOf(this.lr.tipo_negociacao)
+                }, error => {})
+                this.lrs.getUnidademedida().subscribe(res => {
+                    this.unidade_med = res['data']
+                    this.unidade_medida_picker.selectedIndex = this.unidade_med.indexOf(this.lr.unidade_medida_id)
+                    this.selectedIndexMedida = this.unidade_med.indexOf(this.lr.unidade_medida_id)
+                }, error => {})
             }, error => {alert('Servidor fora do ar!'); })
         })
         this.image = new Image()
@@ -77,6 +90,13 @@ export class MyOfertasEditComponent implements OnInit {
         const picker = <ListPicker>args.object;
         this.lr.classificacao_id = this.classificacao[picker.selectedIndex]
     }
+    onNavigateToUnidade(fargs){
+        const listPickerComponent = fargs.object;
+        listPickerComponent.on("selectedIndexChange", (args: EventData) => {
+            const picker = <ListPicker>args.object;
+            picker.selectedIndex = this.unidade_med.indexOf(this.lr.unidade_medida_id)
+        });
+    }
     checkCa(){
 
         let cont = true
@@ -92,7 +112,21 @@ export class MyOfertasEditComponent implements OnInit {
             this.update()
 
     }
-    update(){}
+    update(){
+        this.upload(this.lr.id)
+        this.lrs.put(this.lr, this.lr.id).subscribe(res=>{
+            this.rt.navigate(["my-ofertas"] , {
+                animated: true,
+                transition: {
+                    name: "slideTop",
+                    duration: 380,
+                    curve: "easeIn"
+                }
+            });
+        }, error => {
+
+        })
+    }
     capturePhoto() {
         let options = {
             width: 250,
@@ -107,6 +141,7 @@ export class MyOfertasEditComponent implements OnInit {
                 if(isAndroid)
                     this.lr.foto = image['_android']
                 this.photoPath = image['_android']
+                this.update_foto = true
                 ImageSource.fromAsset(image)
                     .then(img => {
                         let base64 = img.toBase64String("jpeg", 100)
@@ -143,7 +178,8 @@ export class MyOfertasEditComponent implements OnInit {
 
 
     upload(id: number) {
-        this.start_upload(false, false, id);
+        if(this.update_foto)
+            this.start_upload(false, false, id);
     }
 
     start_upload(should_fail, isMulti, id) {

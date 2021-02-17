@@ -5,7 +5,7 @@ registerElement('MapView', () => MapView);
 import * as geolocation from "nativescript-geolocation";
 import { Accuracy } from "@nativescript/core/ui/enums";
 import {OfertaService} from "../../services/oferta.service";
-import {OfertaResponseModel} from "../../models/oferta.model";
+import {OfertaResponseModel, SolicitacaoColeta} from "../../models/oferta.model";
 import * as utils from "@nativescript/core/utils/utils";
 import * as TNSPhone from "nativescript-phone";
 import {ActivatedRoute} from "@angular/router";
@@ -23,7 +23,7 @@ export class HomeDetailComponent implements OnInit{
     public showMessage: boolean = false
     private background: any
     private message: string = "";
-
+    showColetaOferta: boolean = true
     ofertaDetail: OfertaResponseModel
     constructor(private route: ActivatedRoute, private ofertaService: OfertaService) {}
 
@@ -32,6 +32,7 @@ export class HomeDetailComponent implements OnInit{
         this.ofertaService.index(this.route.queryParams['_value'].id).subscribe(response => {
             this.ofertaDetail = response['data']
             this.imagens.push(response['data']['foto'])
+            console.log(response['data'])
         }, error => {alert('Servidor fora do ar!'); })
 
     }
@@ -43,5 +44,13 @@ export class HomeDetailComponent implements OnInit{
         TNSPhone.requestCallPermission('Você deve aceitar a permissão para fazer chamada!.')
             .then(() => TNSPhone.dial(telefone, false))
             .catch(() => TNSPhone.dial(telefone, true));
+    }
+
+    storeColeta(){
+        let sc = new SolicitacaoColeta()
+        sc.oferta_material_id = this.route.queryParams['_value'].id
+        this.ofertaService.storeSolicitacaoColeta(sc).subscribe(res => {
+
+        }, error => {})
     }
 }

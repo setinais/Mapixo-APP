@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {CredentialsModel} from "../models/credentials.model";
 import {HttpClient} from "@angular/common/http";
 import {url_api} from "../env/url-default";
-import {OfertaModel} from "../models/oferta.model";
+import {OfertaModel, OfertaResponseModel, SolicitacaoColeta} from "../models/oferta.model";
 
 @Injectable({
     providedIn: 'root'
@@ -20,8 +20,8 @@ export class OfertaService {
     index(id: number){
         return this.http.get(`${url_api}oferta/${id}`)
     }
-    put(user:OfertaModel, id){
-        return this.http.put(`${url_api}oferta`, user);
+    put(user:OfertaResponseModel, id: number){
+        return this.http.put(`${url_api}oferta/${id}`, user);
     }
     delete(id: number){
         return this.http.delete(`${url_api}oferta/${id}`)
@@ -38,5 +38,8 @@ export class OfertaService {
     }
     sucess(id: number){
         return this.http.get(`${url_api}sucessOferta/${id}`)
+    }
+    storeSolicitacaoColeta(sc: SolicitacaoColeta){
+        return this.http.post(`${url_api}coleta_oferta`, sc)
     }
 }

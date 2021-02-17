@@ -3,9 +3,10 @@
 </ActionBar>
 <ScrollView orientation="vertical">
     <StackLayout>
-        <GridLayout rows="auto,auto,auto,auto, auto, auto, auto, auto,auto" columns="auto, auto">
+        <GridLayout rows="auto,auto,auto,auto, auto, auto, auto, auto,auto" columns="auto, auto" class="m-b-20">
             <Image class="image-detail" row="0" colSpan="2" [src]="ofertaDetail.foto"></Image>
             <Label col="0" row="1" class="m-t-8 m-l-8 label-name" [text]="ofertaDetail.nome"></Label>
+            <Button *ngIf="showColetaOferta" col="1" row="1" class="m-t-4 m-l-4 btn-coleta" text="Solicitar Coleta"></Button>
             <Label col="1" row="2" class="m-t-8 m-l-8 label-descricao" text="Descrição:"></Label>
             <Label col="1" row="3" class="m-t-8 m-l-8 label-info" [text]="ofertaDetail.descricao"></Label>
             <Label col="0" row="2" class="m-t-8 m-l-8 label-descricao" text="Quantidade:"></Label>
@@ -31,7 +32,5 @@
 </AbsoluteLayout>
 
 <AbsoluteLayout *ngIf="showMessage" width="70%" height="30" class="message" [ngStyle]="{'background-color': background}">
-
     <Label horizontalAlignment="center" verticalAlignment="center" [text]="message" class="text-message" textWrap="true"></Label>
-
 </AbsoluteLayout>

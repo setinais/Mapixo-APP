@@ -99,8 +99,8 @@ export class OfertaMaterialComponent implements OnInit {
     }
     capturePhoto() {
         let options = {
-            width: 250,
-            height: 300,
+            width: 100,
+            height: 100,
             keepAspectRatio: true,
             saveToGallery: false
         }
@@ -109,11 +109,12 @@ export class OfertaMaterialComponent implements OnInit {
             .then(image => {
                 this.image.imageSource = image
                 if(isAndroid)
+                    console.log("Size: " + image.options.width + "x" + image.options.height);
                     this.lr.foto = image['_android']
                     this.photoPath = image['_android']
                 ImageSource.fromAsset(image)
                     .then(img => {
-                        let base64 = img.toBase64String("jpeg", 100)
+                        let base64 = img.toBase64String("jpeg", 40)
                         //Aqui emitir o evento para o outro component
 
                     })
@@ -143,8 +144,6 @@ export class OfertaMaterialComponent implements OnInit {
         });
 
     }
-
-
 
     upload(id: number) {
         this.start_upload(false, false, id);
@@ -213,7 +212,9 @@ export class OfertaMaterialComponent implements OnInit {
         let that = this;
         function errorHandler(e) {
             console.log("error " + e.responseCode + " code." + e.toString());
-            console.log(e.response.toString())
+            console.log(e.response.clientDataJSON)
+            // console.log(e.response.)
+
             var serverResponse = e.response;
         }
 

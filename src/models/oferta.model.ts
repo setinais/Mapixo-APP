@@ -48,11 +48,16 @@ export class OfertaResponseModel{
     }
     nome: string
     descricao: string
-    qntd: number
+    qntd: string
     foto: string
     status: number
-    valor: number
+    valor: string
     tipo_negociacao: string
     created_at: string
     updated_at: string
+}
+
+export class SolicitacaoColeta{
+    user_id: number
+    oferta_material_id: number
 }

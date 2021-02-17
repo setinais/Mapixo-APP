@@ -19,9 +19,9 @@ export class HomeComponent implements OnInit{
 
     latitude =  -10.173044;
     longitude = -48.885372;
-    zoom = 14;
+    zoom = 13;
     minZoom = 0;
-    maxZoom = 22;
+    maxZoom = 20;
     bearing = 0;
     tilt = 0;
     padding = [40, 40, 40, 40];
