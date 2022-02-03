@@ -1,1 +1,0 @@
-tns build android --release --key-store-path F:/wamp3.2/www/maixo/key/key.jks --key-store-password 0v2m56gtf --key-store-alias key0 --key-store-alias-password 0v2m56gtf
